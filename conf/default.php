@@ -5,4 +5,4 @@
  * @author Adrian Lang <lang@cosmocode.de>
  */
 
-//$conf['fixme']    = 'FIXME';
+$conf['users_namespace']    = '';

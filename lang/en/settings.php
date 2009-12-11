@@ -6,7 +6,7 @@
  */
 
 // keys need to match the config setting name
-// $lang['fixme'] = 'FIXME';
+$lang['users_namespace'] = 'The namespace in which user pages are located';
 
 
 

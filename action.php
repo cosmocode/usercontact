@@ -22,13 +22,41 @@ class action_plugin_usercontact extends DokuWiki_Action_Plugin {
     }
 
     function register(&$controller) {
+        global $JSINFO;
+        $JSINFO['plugin']['usercontact']['users_namespace'] = $this->getConf('users_namespace');
 
-       $controller->register_hook('AJAX_CALL_UNKNOWN', 'FIXME', $this, 'handle_ajax_call_unknown');
-   
+        $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'handle_ajax');
     }
 
-    function handle_ajax_call_unknown(&$event, $param) { }
+    /**
+     * Handle AJAX request
+     */
+    function handle_ajax($event) {
+        $ajax = $this->loadHelper('ajaxloader', true);
+        if (!$ajax || !$ajax->isLoader('usercontact', $event->data)) {
+            return;
+        }
 
+        $call = $ajax->handleLoad();
+        global $auth;
+        $userdata = $auth->getUserData($call['name']);
+        foreach(array('pass', 'grps') as $hide) {
+            if (isset($userdata[$hide])) {
+                unset($userdata[$hide]);
+            }
+        }
+
+        if (count($userdata) > 0) {
+            echo '<ul>';
+            foreach($userdata as $name => $val) {
+                echo "<li><div class='li'>$name: $val</div></li>";
+            }
+            echo '</ul>';
+        }
+
+        $event->stopPropagation();
+        $event->preventDefault();
+    }
 }
 
 // vim:ts=4:sw=4:et:enc=utf-8:
