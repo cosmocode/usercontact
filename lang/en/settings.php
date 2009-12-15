@@ -5,7 +5,7 @@
  * @author Adrian Lang <lang@cosmocode.de>
  */
 
-// keys need to match the config setting name
+$lang['fields']          = 'Fields to show from the user data. Refer to your authentication backend on what is available.';
 $lang['users_namespace'] = 'The namespace in which user pages are located';
 
 

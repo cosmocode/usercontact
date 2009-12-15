@@ -40,16 +40,25 @@ class action_plugin_usercontact extends DokuWiki_Action_Plugin {
         $call = $ajax->handleLoad();
         global $auth;
         $userdata = $auth->getUserData($call['name']);
-        foreach(array('pass', 'grps') as $hide) {
-            if (isset($userdata[$hide])) {
-                unset($userdata[$hide]);
-            }
-        }
+
+        $fields = explode(',',$this->getConf('fields'));
+        $fields = array_map('trim',$fields);
+        $fields = array_filter($fields);
 
         if (count($userdata) > 0) {
             echo '<ul>';
-            foreach($userdata as $name => $val) {
-                echo "<li><div class='li'>$name: $val</div></li>";
+            foreach($fields as $name){
+                if(!isset($userdata[$name])) continue;
+
+                $val = $userdata[$name];
+                echo '<li class="userov_'.hsc($name).'">';
+                echo '<div class="li">';
+                if($name == 'mail'){
+                        echo '<a href="mailto:'.obfuscate($val).'" class="mail">'.obfuscate($val).'</a>';
+                }else{
+                    echo hsc($val);
+                }
+                echo '</div></li>';
             }
             echo '</ul>';
         }

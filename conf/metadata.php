@@ -6,5 +6,6 @@
  */
 
 
+$meta['fields']          = array('string');
 $meta['users_namespace'] = array('string');
 

@@ -18,7 +18,7 @@ addInitEvent(function() {
             return;
         }
         this.overlay = document.createElement('div');
-        this.overlay.className = 'usercontact_overlay';
+        this.overlay.className = 'usercontact_overlay JSpopup insitu-footnote';
         this.overlay.appendChild(new ajax_loader.Loader('usercontact', {name: this.title.match(regex)[1]}));
         addEvent(this.overlay, 'mouseout', mouveout);
         this.parentNode.insertBefore(this.overlay, this.nextSibling);
@@ -29,6 +29,7 @@ addInitEvent(function() {
     for (var link = 0 ; link < links.length ; ++link) {
         var match = links[link].title.match(regex);
         if (!match) continue;
+        if (!links[link].className.match(/wikilink/)) continue;
         addEvent(links[link], 'mouseover', show_overlay);
     }
 });

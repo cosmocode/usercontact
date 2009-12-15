@@ -5,4 +5,5 @@
  * @author Adrian Lang <lang@cosmocode.de>
  */
 
-$conf['users_namespace']    = '';
+$conf['fields']          = 'name, mail, phone';
+$conf['users_namespace'] = '';
