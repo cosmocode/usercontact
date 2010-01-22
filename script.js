@@ -25,11 +25,19 @@ addInitEvent(function() {
         ajax_loader.start();
     }
 
+    function event_handler (delay) {
+        return function (e) {
+            delay.start.call(delay, this, e);
+        };
+    }
+
     var links = getElementsByClass('page', document, 'div')[0].getElementsByTagName('a');
     for (var link = 0 ; link < links.length ; ++link) {
         var match = links[link].title.match(regex);
         if (!match) continue;
         if (!links[link].className.match(/wikilink/)) continue;
-        addEvent(links[link], 'mouseover', show_overlay);
+        var timer = new Delay(show_overlay);
+        addEvent(links[link], 'mouseover', event_handler(timer, 300));
+        addEvent(links[link], 'mouseout', bind(function (timer) { timer.delTimer(); }, timer));
     }
 });
