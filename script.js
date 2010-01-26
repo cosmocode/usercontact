@@ -13,6 +13,10 @@ addInitEvent(function() {
     }
 
     function show_overlay() {
+        var overlays = getElementsByClass('usercontact_overlay', document, 'div');
+        for (var i = 0; i < overlays.length ; ++i) {
+            overlays[i].style.display = 'none';
+        }
         if (this.overlay) {
             this.overlay.style.display='';
             return;
