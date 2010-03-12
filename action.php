@@ -54,7 +54,7 @@ class action_plugin_usercontact extends DokuWiki_Action_Plugin {
                 echo '<li class="userov_'.hsc($name).'">';
                 echo '<div class="li">';
                 if($name == 'mail'){
-                        echo '<a href="mailto:'.obfuscate($val).'" class="mail">'.obfuscate($val).'</a>';
+                    echo '<a href="mailto:'.obfuscate($val).'" class="mail">'.obfuscate($val).'</a>';
                 }else{
                     echo hsc($val);
                 }

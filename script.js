@@ -1,5 +1,9 @@
 addInitEvent(function() {
-    var regex = new RegExp(JSINFO.plugin.usercontact.users_namespace + ':([^:/]+)');
+    var pages = getElementsByClass('page', document, 'div');
+    if (pages.length === 0) {
+        return;
+    }
+    var regex = new RegExp(JSINFO.plugin.usercontact.users_namespace);
 
     function mouveout(e) {
         var p = e.explicitOriginalTarget;
@@ -35,7 +39,7 @@ addInitEvent(function() {
         };
     }
 
-    var links = getElementsByClass('page', document, 'div')[0].getElementsByTagName('a');
+    var links = pages[0].getElementsByTagName('a');
     for (var link = 0 ; link < links.length ; ++link) {
         var match = links[link].title.match(regex);
         if (!match) continue;
