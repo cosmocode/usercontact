@@ -5,16 +5,7 @@ addInitEvent(function() {
     }
     var regex = new RegExp(JSINFO.plugin.usercontact.users_namespace);
 
-    function mouveout(e) {
-        var p = e.explicitOriginalTarget;
-        while (p && p !== this) {
-            p = p.parentNode;
-        }
-        if (p === this) {
-            return;
-        }
-        this.style.display = 'none';
-    }
+    var id = 0;
 
     function show_overlay() {
         var overlays = getElementsByClass('usercontact_overlay', document, 'div');
@@ -25,11 +16,9 @@ addInitEvent(function() {
             this.overlay.style.display='';
             return;
         }
-        this.overlay = document.createElement('div');
-        this.overlay.className = 'usercontact_overlay JSpopup insitu-footnote';
+        this.overlay = insitu_popup(this, 'usercontact__overlay_' + (id++));
+        this.overlay.className += ' usercontact_overlay';
         this.overlay.appendChild(new ajax_loader.Loader('usercontact', {name: this.title.match(regex)[1]}));
-        addEvent(this.overlay, 'mouseout', mouveout);
-        this.parentNode.insertBefore(this.overlay, this.nextSibling);
         ajax_loader.start();
     }
 
