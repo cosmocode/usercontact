@@ -1,5 +1,5 @@
 addInitEvent(function() {
-    var pages = getElementsByClass('page', document, 'div');
+    var pages = getElementsByClass('content', document, 'div');
     if (pages.length === 0) {
         return;
     }
@@ -12,13 +12,13 @@ addInitEvent(function() {
         for (var i = 0; i < overlays.length ; ++i) {
             overlays[i].style.display = 'none';
         }
-        if (this.overlay) {
-            this.overlay.style.display='';
+        if (this.usercontact__overlay) {
+            this.usercontact__overlay.style.display='';
             return;
         }
-        this.overlay = insitu_popup(this, 'usercontact__overlay_' + (id++));
-        this.overlay.className += ' usercontact_overlay';
-        this.overlay.appendChild(new ajax_loader.Loader('usercontact', {name: this.title.match(regex)[1]}));
+        this.usercontact__overlay = insitu_popup(this, 'usercontact__overlay_' + (id++));
+        this.usercontact__overlay.className += ' usercontact_overlay';
+        this.usercontact__overlay.appendChild(new ajax_loader.Loader('usercontact', {name: this.usercontact__name}));
         ajax_loader.start();
     }
 
@@ -30,9 +30,9 @@ addInitEvent(function() {
 
     var links = pages[0].getElementsByTagName('a');
     for (var link = 0 ; link < links.length ; ++link) {
-        var match = links[link].title.match(regex);
+        var match = links[link].href.replace(/\//g, ':').match(regex);
         if (!match) continue;
-        if (!links[link].className.match(/wikilink/)) continue;
+        links[link].usercontact__name = match[1];
         var timer = new Delay(show_overlay);
         addEvent(links[link], 'mouseover', event_handler(timer, 300));
         addEvent(links[link], 'mouseout', bind(function (timer) { timer.delTimer(); }, timer));
