@@ -3,7 +3,7 @@ addInitEvent(function() {
     if (pages.length === 0) {
         return;
     }
-    var regex = new RegExp(JSINFO.plugin.usercontact.users_namespace);
+    var regex = new RegExp(JSINFO.plugin.usercontact.users_namespace + '$');
 
     var id = 0;
 
@@ -32,8 +32,6 @@ addInitEvent(function() {
     for (var link = 0 ; link < links.length ; ++link) {
         var match = links[link].href.replace(/\//g, ':').match(regex);
         if (!match) continue;
-        var doaction = links[link].href.match(/(^|[&?])do=([^&]+)($|&)/);
-        if (doaction && doaction[2] !== 'show') continue;
         links[link].usercontact__name = match[1];
         var timer = new Delay(show_overlay);
         addEvent(links[link], 'mouseover', event_handler(timer, 300));
