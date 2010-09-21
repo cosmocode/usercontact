@@ -1,5 +1,5 @@
 addInitEvent(function() {
-    var pages = getElementsByClass('content', document, 'div');
+    var pages = getElementsByClass('dokuwiki', document, 'div');
     if (pages.length === 0) {
         return;
     }
