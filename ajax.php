@@ -4,6 +4,7 @@ $userdata = $auth->getUserData($_POST['name']);
 
 require_once 'action.php';
 $plugin = new action_plugin_usercontact;
+$fields = explode(',',$plugin->getConf('fields'));
 $fields = array_map('trim',$fields);
 $fields = array_filter($fields);
 
