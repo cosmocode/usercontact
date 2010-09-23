@@ -18,8 +18,9 @@ addInitEvent(function() {
         }
         this.usercontact__overlay = insitu_popup(this, 'usercontact__overlay_' + (id++));
         this.usercontact__overlay.className += ' usercontact_overlay';
-        this.usercontact__overlay.appendChild(new ajax_loader.Loader('usercontact', {name: this.usercontact__name}));
-        ajax_loader.start();
+        var ajax = new doku_ajax('plugin_usercontact', {name: this.usercontact__name});
+        ajax.elementObj = this.usercontact__overlay;
+        ajax.runAJAX();
     }
 
     function event_handler (delay) {
