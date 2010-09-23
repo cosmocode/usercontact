@@ -2,7 +2,8 @@
 global $auth;
 $userdata = $auth->getUserData($_POST['name']);
 
-$fields = explode(',',$this->getConf('fields'));
+require_once 'action.php';
+$plugin = new action_plugin_usercontact;
 $fields = array_map('trim',$fields);
 $fields = array_filter($fields);
 
