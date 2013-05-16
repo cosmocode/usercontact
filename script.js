@@ -1,41 +1,60 @@
-addInitEvent(function() {
-    var pages = getElementsByClass('dokuwiki', document, 'div');
-    if (pages.length === 0) {
-        return;
-    }
+jQuery(function () {
     var regex = new RegExp(JSINFO.plugin.usercontact.users_namespace + '$');
 
-    var id = 0;
-
-    function show_overlay() {
-        var overlays = getElementsByClass('usercontact_overlay', document, 'div');
-        for (var i = 0; i < overlays.length ; ++i) {
-            overlays[i].style.display = 'none';
+    /**
+     * Create and show the overlay
+     *
+     * @param $link object The jQuery object of the link to the user page
+     */
+    function show_overlay($link) {
+        if(!$link.usercontact_popup){
+            $link.usercontact_popup = dw_page.insituPopup($link, $link.usercontact_id);
+            $link.usercontact_popup.addClass('usercontact_overlay');
+            $link.usercontact_popup.load(
+                DOKU_BASE + 'lib/exe/ajax.php',
+                {
+                    call: 'plugin_usercontact',
+                    name: $link.usercontact_name
+                }
+            );
         }
-        if (this.usercontact__overlay) {
-            this.usercontact__overlay.style.display='';
-            return;
-        }
-        this.usercontact__overlay = insitu_popup(this, 'usercontact__overlay_' + (id++));
-        this.usercontact__overlay.className += ' usercontact_overlay';
-        var ajax = new doku_ajax('plugin_usercontact', {name: this.usercontact__name});
-        ajax.elementObj = this.usercontact__overlay;
-        ajax.runAJAX();
+        $link.usercontact_popup.show();
     }
 
-    function event_handler (delay) {
-        return function (e) {
-            delay.start.call(delay, this, e);
-        };
-    }
+    /**
+     * Find all links to user pages
+     *
+     * Adds events and info to the links.
+     *
+     * @type {number}
+     */
+    var links = 0;
+    jQuery('div.dokuwiki a').each(function () {
+        var $link = jQuery(this);
+        var href = $link.attr('href');
+        if (!href) return;
+        var match = href.replace(/\//g, ':').match(regex);
+        if (!match) return;
 
-    var links = pages[0].getElementsByTagName('a');
-    for (var link = 0 ; link < links.length ; ++link) {
-        var match = links[link].href.replace(/\//g, ':').match(regex);
-        if (!match) continue;
-        links[link].usercontact__name = match[1];
-        var timer = new Delay(show_overlay);
-        addEvent(links[link], 'mouseover', event_handler(timer, 300));
-        addEvent(links[link], 'mouseout', bind(function (timer) { timer.delTimer(); }, timer));
-    }
+        $link.usercontact_name = match[1];
+        $link.usercontact_id   = 'usercontact_'+(links++);
+
+        $link.mouseover(function () {
+            $link.usercontact_timer = window.setTimeout(
+                function () {
+                    console.log($link.usercontact_name);
+                    show_overlay($link);
+                    $link.usercontact_timer = null;
+                },
+                300
+            );
+        });
+
+        $link.mouseout(function () {
+            if ($link.usercontact_timer) window.clearTimeout($link.usercontact_timer);
+            $link.usercontact_timer = null;
+        });
+
+
+    });
 });
