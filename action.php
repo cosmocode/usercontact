@@ -15,7 +15,7 @@ require_once(DOKU_PLUGIN . 'action.php');
 
 class action_plugin_usercontact extends DokuWiki_Action_Plugin {
 
-    function register(&$controller) {
+    function register(Doku_Event_Handler $controller) {
         global $JSINFO;
         $JSINFO['plugin']['usercontact']['users_namespace'] = $this->getConf('users_namespace');
 
