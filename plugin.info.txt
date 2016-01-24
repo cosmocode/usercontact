@@ -1,7 +1,7 @@
 base   usercontact
 author Adrian Lang
 email  dokuwiki@cosmocode.de
-date   2015-02-26
+date   2016-01-24
 name   usercontact plugin
 desc   Dynamically displays contact data next to links to a user namespace
 url    http://www.dokuwiki.org/plugin:usercontact
