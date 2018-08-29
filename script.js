@@ -28,7 +28,7 @@ jQuery(function () {
                 }
             );
         }
-        $link.usercontact_popup.show();
+        $link.usercontact_popup.show().position({my: 'left top', at: 'left bottom', of: $link});
     }
 
     /**
