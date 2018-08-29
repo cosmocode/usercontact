@@ -1,4 +1,7 @@
 jQuery(function () {
+    if (!JSINFO.plugin.usercontact.users_namespace) {
+        return;
+    }
     var regex = new RegExp(JSINFO.plugin.usercontact.users_namespace + '$');
 
     /**
