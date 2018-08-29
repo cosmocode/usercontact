@@ -29,6 +29,10 @@ class action_plugin_usercontact extends DokuWiki_Action_Plugin {
         global $INPUT;
 
         $userdata = $auth->getUserData($INPUT->str('name'));
+        if (empty($userdata)) {
+            http_status(404, 'User not found');
+            return;
+        }
         $fields = explode(',', $this->getConf('fields'));
         $fields = array_map('trim', $fields);
         $fields = array_filter($fields);

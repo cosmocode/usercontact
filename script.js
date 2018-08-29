@@ -13,11 +13,18 @@ jQuery(function () {
         if(!$link.usercontact_popup){
             $link.usercontact_popup = dw_page.insituPopup($link, $link.usercontact_id);
             $link.usercontact_popup.addClass('usercontact_overlay');
+            $link.usercontact_popup.css('visibility', 'hidden');
             $link.usercontact_popup.load(
                 DOKU_BASE + 'lib/exe/ajax.php',
                 {
                     call: 'plugin_usercontact',
                     name: $link.usercontact_name
+                },
+                function(text, status, jqxhr) {
+                    if (jqxhr.status >= 400) {
+                        return;
+                    }
+                    $link.usercontact_popup.css('visibility', 'visible');
                 }
             );
         }
