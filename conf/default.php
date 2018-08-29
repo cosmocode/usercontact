@@ -6,4 +6,4 @@
  */
 
 $conf['fields']          = 'name, mail, phone';
-$conf['users_namespace'] = '';
+$conf['users_namespace'] = 'user:([^:^\&^\?]+)(?::start)?';
