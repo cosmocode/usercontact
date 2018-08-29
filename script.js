@@ -10,7 +10,7 @@ jQuery(function () {
      * @param $link object The jQuery object of the link to the user page
      */
     function show_overlay($link) {
-        if(!$link.usercontact_popup){
+        if (!$link.usercontact_popup) {
             $link.usercontact_popup = dw_page.insituPopup($link, $link.usercontact_id);
             $link.usercontact_popup.addClass('usercontact_overlay');
             $link.usercontact_popup.css('visibility', 'hidden');
@@ -18,9 +18,9 @@ jQuery(function () {
                 DOKU_BASE + 'lib/exe/ajax.php',
                 {
                     call: 'plugin_usercontact',
-                    name: $link.usercontact_name
+                    name: $link.usercontact_name,
                 },
-                function(text, status, jqxhr) {
+                function (text, status, jqxhr) {
                     if (jqxhr.status >= 400) {
                         return;
                     }
@@ -47,7 +47,7 @@ jQuery(function () {
         if (!match) return;
 
         $link.usercontact_name = match[1];
-        $link.usercontact_id   = 'usercontact_'+(links++);
+        $link.usercontact_id = 'usercontact_' + (links++);
 
         $link.mouseover(function () {
             $link.usercontact_timer = window.setTimeout(
@@ -64,7 +64,5 @@ jQuery(function () {
             if ($link.usercontact_timer) window.clearTimeout($link.usercontact_timer);
             $link.usercontact_timer = null;
         });
-
-
     });
 });
