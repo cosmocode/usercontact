@@ -32,7 +32,7 @@ jQuery(function () {
      * @type {number}
      */
     var links = 0;
-    jQuery('div.dokuwiki a').each(function () {
+    jQuery('.dokuwiki a').each(function () {
         var $link = jQuery(this);
         var href = $link.attr('href');
         if (!href) return;
